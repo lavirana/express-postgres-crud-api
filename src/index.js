@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import pool from './config/db.js';
 
 dotenv.config();
 
@@ -16,6 +17,14 @@ app.use(cors());
 // Routes
 
 // Error handling middleware
+
+
+// Testing PostgreSQL connection
+
+app.get('/test-db', async (req, res) => {
+    const result = await pool.query('SELECT current_database()');
+    res.json({ database: result.rows[0] });
+});
 
 // server running
 app.listen(PORT, () => {
